@@ -1,0 +1,51 @@
+﻿@model PubHub.Models.HappyHourSpecials
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HappyHourSpecials</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DayOfWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfDrink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfDrink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DrinkPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DrinkPrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HappyHourStartTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HappyHourStartTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HappyHourEndTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HappyHourEndTime)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="HappyHourSpecialsId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

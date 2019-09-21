@@ -1,0 +1,48 @@
+﻿@model PubHub.Models.HappyHourSpecials
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HappyHourSpecials</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DayOfWeek)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfDrink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfDrink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DrinkPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DrinkPrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HappyHourStartTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HappyHourStartTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HappyHourEndTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HappyHourEndTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.HappyHourSpecialsId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

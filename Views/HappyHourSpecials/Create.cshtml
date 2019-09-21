@@ -1,0 +1,53 @@
+﻿@model PubHub.Models.HappyHourSpecials
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>HappyHourSpecials</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DayOfWeek" class="control-label"></label>
+                <select asp-for="DayOfWeek" class="form-control"></select>
+                <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfDrink" class="control-label"></label>
+                <input asp-for="TypeOfDrink" class="form-control" />
+                <span asp-validation-for="TypeOfDrink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrinkPrice" class="control-label"></label>
+                <input asp-for="DrinkPrice" class="form-control" />
+                <span asp-validation-for="DrinkPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HappyHourStartTime" class="control-label"></label>
+                <input asp-for="HappyHourStartTime" class="form-control" />
+                <span asp-validation-for="HappyHourStartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HappyHourEndTime" class="control-label"></label>
+                <input asp-for="HappyHourEndTime" class="form-control" />
+                <span asp-validation-for="HappyHourEndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

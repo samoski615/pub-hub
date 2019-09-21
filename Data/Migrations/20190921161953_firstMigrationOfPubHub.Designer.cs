@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PubHub.Data;
 
 namespace PubHub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190921161953_firstMigrationOfPubHub")]
+    partial class firstMigrationOfPubHub
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,9 +75,6 @@ namespace PubHub.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -115,8 +114,6 @@ namespace PubHub.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -189,125 +186,6 @@ namespace PubHub.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PubHub.Models.BarOwner", b =>
-                {
-                    b.Property<int>("BarOwnerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("ApplicationId");
-
-                    b.Property<int>("AverageRating");
-
-                    b.Property<string>("BarClose");
-
-                    b.Property<string>("BarName");
-
-                    b.Property<string>("BarOpen");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("HappyHourEndTime");
-
-                    b.Property<int>("HappyHourSpecialsId");
-
-                    b.Property<string>("HappyHourStartTime");
-
-                    b.Property<int>("PotentialCustomers");
-
-                    b.Property<string>("State");
-
-                    b.Property<string>("TypeOfBar");
-
-                    b.Property<int>("Zipcode");
-
-                    b.HasKey("BarOwnerId");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.ToTable("BarOwners");
-                });
-
-            modelBuilder.Entity("PubHub.Models.DrinkEnthusiast", b =>
-                {
-                    b.Property<int>("DrinkEnthusiastId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("ApplicationId");
-
-                    b.Property<bool>("CheckInStatus");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("State");
-
-                    b.Property<string>("Zipcode");
-
-                    b.HasKey("DrinkEnthusiastId");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.ToTable("DrinkEnthusiasts");
-                });
-
-            modelBuilder.Entity("PubHub.Models.HappyHourSpecials", b =>
-                {
-                    b.Property<int>("HappyHourSpecialsId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DayOfWeek");
-
-                    b.Property<double>("DrinkPrice");
-
-                    b.Property<string>("HappyHourEndTime");
-
-                    b.Property<string>("HappyHourStartTime");
-
-                    b.Property<string>("TypeOfDrink");
-
-                    b.HasKey("HappyHourSpecialsId");
-
-                    b.ToTable("HappyHourSpecials");
-                });
-
-            modelBuilder.Entity("PubHub.Models.RatingsTable", b =>
-                {
-                    b.Property<int>("RatingsTableId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BarOwnerId");
-
-                    b.Property<int>("CustomerRating");
-
-                    b.Property<int>("DrinkEnthusiastId");
-
-                    b.HasKey("RatingsTableId");
-
-                    b.ToTable("RatingsTables");
-                });
-
-            modelBuilder.Entity("PubHub.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("Name");
-
-                    b.ToTable("ApplicationUser");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -351,20 +229,6 @@ namespace PubHub.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PubHub.Models.BarOwner", b =>
-                {
-                    b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationId");
-                });
-
-            modelBuilder.Entity("PubHub.Models.DrinkEnthusiast", b =>
-                {
-                    b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationId");
                 });
 #pragma warning restore 612, 618
         }
