@@ -13,6 +13,7 @@ namespace PubHub.Data
         public DbSet<DrinkEnthusiast> DrinkEnthusiasts { get; set; }
         public DbSet<RatingsTable> RatingsTables { get; set; }
         public DbSet<HappyHourSpecials> HappyHourSpecials { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
