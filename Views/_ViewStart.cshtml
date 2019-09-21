@@ -1,3 +1,14 @@
 ﻿@{
-    Layout = "_Layout";
+    if (this.User.IsInRole("Drink Enthusiast"))
+    {
+        Layout = "~/Views/Shared/_LayoutDrinkEnthusiast.cshtml";
+    }
+    else if (this.User.IsInRole("Bar Owner"))
+    {
+        Layout = "~/Views/Shared/_LayoutBarOwner.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }

@@ -12,17 +12,17 @@ namespace PubHub.Controllers
 {
     public class BarOwnersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public BarOwnersController(ApplicationDbContext context)
+        public BarOwnersController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: BarOwners
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.BarOwners.Include(b => b.ApplicationUser);
+            var applicationDbContext = _db.BarOwners.Include(b => b.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var barOwner = await _context.BarOwners
+            var barOwner = await _db.BarOwners
                 .Include(b => b.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.BarOwnerId == id);
             if (barOwner == null)
@@ -48,7 +48,7 @@ namespace PubHub.Controllers
         // GET: BarOwners/Create
         public IActionResult Create()
         {
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -61,11 +61,11 @@ namespace PubHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(barOwner);
-                await _context.SaveChangesAsync();
+                _db.Add(barOwner);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 
@@ -77,12 +77,12 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var barOwner = await _context.BarOwners.FindAsync(id);
+            var barOwner = await _db.BarOwners.FindAsync(id);
             if (barOwner == null)
             {
                 return NotFound();
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 
@@ -102,8 +102,8 @@ namespace PubHub.Controllers
             {
                 try
                 {
-                    _context.Update(barOwner);
-                    await _context.SaveChangesAsync();
+                    _db.Update(barOwner);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +118,7 @@ namespace PubHub.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 
@@ -130,7 +130,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var barOwner = await _context.BarOwners
+            var barOwner = await _db.BarOwners
                 .Include(b => b.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.BarOwnerId == id);
             if (barOwner == null)
@@ -146,15 +146,15 @@ namespace PubHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var barOwner = await _context.BarOwners.FindAsync(id);
-            _context.BarOwners.Remove(barOwner);
-            await _context.SaveChangesAsync();
+            var barOwner = await _db.BarOwners.FindAsync(id);
+            _db.BarOwners.Remove(barOwner);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BarOwnerExists(int id)
         {
-            return _context.BarOwners.Any(e => e.BarOwnerId == id);
+            return _db.BarOwners.Any(e => e.BarOwnerId == id);
         }
     }
 }
