@@ -15,8 +15,9 @@
             <input type="hidden" asp-for="BarOwnerId" />
             <div class="form-group">
                 <label asp-for="HappyHourSpecialsId" class="control-label"></label>
-                <input asp-for="HappyHourSpecialsId" class="form-control" />
-                <span asp-validation-for="HappyHourSpecialsId" class="text-danger"></span>
+                <input type="hidden" asp-for="HappyHourSpecialsId" />
+                @*<input asp-for="HappyHourSpecialsId" class="form-control" />
+        <span asp-validation-for="HappyHourSpecialsId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="BarName" class="control-label"></label>
@@ -49,11 +50,6 @@
                 <span asp-validation-for="TypeOfBar" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AverageRating" class="control-label"></label>
-                <input asp-for="AverageRating" class="form-control" />
-                <span asp-validation-for="AverageRating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="BarOpen" class="control-label"></label>
                 <input asp-for="BarOpen" class="form-control" />
                 <span asp-validation-for="BarOpen" class="text-danger"></span>
@@ -64,24 +60,10 @@
                 <span asp-validation-for="BarClose" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HappyHourStartTime" class="control-label"></label>
-                <input asp-for="HappyHourStartTime" class="form-control" />
-                <span asp-validation-for="HappyHourStartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HappyHourEndTime" class="control-label"></label>
-                <input asp-for="HappyHourEndTime" class="form-control" />
-                <span asp-validation-for="HappyHourEndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PotentialCustomers" class="control-label"></label>
-                <input asp-for="PotentialCustomers" class="form-control" />
-                <span asp-validation-for="PotentialCustomers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="ApplicationId" class="control-label"></label>
-                <select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
-                <span asp-validation-for="ApplicationId" class="text-danger"></span>
+                <input type="hidden" asp-for="ApplicationId" />
+                @*<select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
+        <span asp-validation-for="ApplicationId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -12,17 +12,17 @@ namespace PubHub.Controllers
 {
     public class HappyHourSpecialsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public HappyHourSpecialsController(ApplicationDbContext context)
+        public HappyHourSpecialsController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: HappyHourSpecials
         public async Task<IActionResult> Index()
         {
-            return View(await _context.HappyHourSpecials.ToListAsync());
+            return View(await _db.HappyHourSpecials.ToListAsync());
         }
 
         // GET: HappyHourSpecials/Details/5
@@ -33,7 +33,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var happyHourSpecials = await _context.HappyHourSpecials
+            var happyHourSpecials = await _db.HappyHourSpecials
                 .FirstOrDefaultAsync(m => m.HappyHourSpecialsId == id);
             if (happyHourSpecials == null)
             {
@@ -58,8 +58,8 @@ namespace PubHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(happyHourSpecials);
-                await _context.SaveChangesAsync();
+                _db.Add(happyHourSpecials);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(happyHourSpecials);
@@ -73,7 +73,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var happyHourSpecials = await _context.HappyHourSpecials.FindAsync(id);
+            var happyHourSpecials = await _db.HappyHourSpecials.FindAsync(id);
             if (happyHourSpecials == null)
             {
                 return NotFound();
@@ -97,8 +97,8 @@ namespace PubHub.Controllers
             {
                 try
                 {
-                    _context.Update(happyHourSpecials);
-                    await _context.SaveChangesAsync();
+                    _db.Update(happyHourSpecials);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +124,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var happyHourSpecials = await _context.HappyHourSpecials
+            var happyHourSpecials = await _db.HappyHourSpecials
                 .FirstOrDefaultAsync(m => m.HappyHourSpecialsId == id);
             if (happyHourSpecials == null)
             {
@@ -139,15 +139,15 @@ namespace PubHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var happyHourSpecials = await _context.HappyHourSpecials.FindAsync(id);
-            _context.HappyHourSpecials.Remove(happyHourSpecials);
-            await _context.SaveChangesAsync();
+            var happyHourSpecials = await _db.HappyHourSpecials.FindAsync(id);
+            _db.HappyHourSpecials.Remove(happyHourSpecials);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool HappyHourSpecialsExists(int id)
         {
-            return _context.HappyHourSpecials.Any(e => e.HappyHourSpecialsId == id);
+            return _db.HappyHourSpecials.Any(e => e.HappyHourSpecialsId == id);
         }
     }
 }

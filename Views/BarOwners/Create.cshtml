@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create Your Account</h2>
 
 <h4>BarOwner</h4>
 <hr />
@@ -12,7 +12,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ApplicationId" />
             <div class="form-group">
                 <label asp-for="BarName" class="control-label"></label>
                 <input asp-for="BarName" class="form-control" />
@@ -46,7 +45,7 @@
             <div class="form-group">
                 <label asp-for="BarOpen" class="control-label"></label>
                 <input asp-for="BarOpen" class="form-control" />
-                <span asp-validation-for="BarOpen" class="text-danger"></span>
+                @*<select asp-for="BarOpen" class="form-control" asp-items="ViewBag.BarOpen"></select>*@
             </div>
             <div class="form-group">
                 <label asp-for="BarClose" class="control-label"></label>
@@ -54,8 +53,9 @@
                 <span asp-validation-for="BarClose" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ApplicationId" class="control-label"></label>
-                <select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
+                <input type="hidden" asp-for="ApplicationId" />
+                @*<label asp-for="ApplicationId" class="control-label"></label>*@
+                @*<select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

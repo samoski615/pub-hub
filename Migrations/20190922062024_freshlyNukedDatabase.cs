@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PubHub.Data.Migrations
+namespace PubHub.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class freshlyNukedDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,30 @@ namespace PubHub.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HappyHourSpecials",
+                columns: table => new
+                {
+                    HappyHourSpecialsId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DayOfWeek = table.Column<int>(nullable: false),
+                    TypeOfDrink = table.Column<string>(nullable: true),
+                    DrinkPrice = table.Column<double>(nullable: false),
+                    HappyHourStartTime = table.Column<string>(nullable: true),
+                    HappyHourEndTime = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HappyHourSpecials", x => x.HappyHourSpecialsId);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,8 +112,8 @@ namespace PubHub.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -138,8 +157,8 @@ namespace PubHub.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -150,6 +169,97 @@ namespace PubHub.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrinkEnthusiasts",
+                columns: table => new
+                {
+                    DrinkEnthusiastId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Zipcode = table.Column<string>(nullable: true),
+                    CheckInStatus = table.Column<bool>(nullable: false),
+                    ApplicationId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrinkEnthusiasts", x => x.DrinkEnthusiastId);
+                    table.ForeignKey(
+                        name: "FK_DrinkEnthusiasts_AspNetUsers_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarOwners",
+                columns: table => new
+                {
+                    BarOwnerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BarName = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Zipcode = table.Column<string>(nullable: true),
+                    TypeOfBar = table.Column<string>(nullable: true),
+                    AverageRating = table.Column<int>(nullable: false),
+                    BarOpen = table.Column<string>(nullable: true),
+                    BarClose = table.Column<string>(nullable: true),
+                    HappyHourStartTime = table.Column<string>(nullable: true),
+                    HappyHourEndTime = table.Column<string>(nullable: true),
+                    PotentialCustomers = table.Column<int>(nullable: false),
+                    ApplicationId = table.Column<string>(nullable: true),
+                    HappyHourSpecialsId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarOwners", x => x.BarOwnerId);
+                    table.ForeignKey(
+                        name: "FK_BarOwners_AspNetUsers_ApplicationId",
+                        column: x => x.ApplicationId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BarOwners_HappyHourSpecials_HappyHourSpecialsId",
+                        column: x => x.HappyHourSpecialsId,
+                        principalTable: "HappyHourSpecials",
+                        principalColumn: "HappyHourSpecialsId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RatingsTables",
+                columns: table => new
+                {
+                    RatingsTableId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BarOwnerId = table.Column<int>(nullable: false),
+                    DrinkEnthusiastId = table.Column<int>(nullable: false),
+                    CustomerRating = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RatingsTables", x => x.RatingsTableId);
+                    table.ForeignKey(
+                        name: "FK_RatingsTables_BarOwners_BarOwnerId",
+                        column: x => x.BarOwnerId,
+                        principalTable: "BarOwners",
+                        principalColumn: "BarOwnerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RatingsTables_DrinkEnthusiasts_DrinkEnthusiastId",
+                        column: x => x.DrinkEnthusiastId,
+                        principalTable: "DrinkEnthusiasts",
+                        principalColumn: "DrinkEnthusiastId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -191,6 +301,31 @@ namespace PubHub.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarOwners_ApplicationId",
+                table: "BarOwners",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarOwners_HappyHourSpecialsId",
+                table: "BarOwners",
+                column: "HappyHourSpecialsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DrinkEnthusiasts_ApplicationId",
+                table: "DrinkEnthusiasts",
+                column: "ApplicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingsTables_BarOwnerId",
+                table: "RatingsTables",
+                column: "BarOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingsTables_DrinkEnthusiastId",
+                table: "RatingsTables",
+                column: "DrinkEnthusiastId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +346,19 @@ namespace PubHub.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RatingsTables");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "BarOwners");
+
+            migrationBuilder.DropTable(
+                name: "DrinkEnthusiasts");
+
+            migrationBuilder.DropTable(
+                name: "HappyHourSpecials");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

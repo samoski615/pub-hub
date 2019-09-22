@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PubHub.Data;
 
-namespace PubHub.Data.Migrations
+namespace PubHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190922062231_freshlyNukedDatabase1")]
+    partial class freshlyNukedDatabase1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,11 +143,9 @@ namespace PubHub.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -176,11 +176,9 @@ namespace PubHub.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -221,11 +219,13 @@ namespace PubHub.Data.Migrations
 
                     b.Property<string>("TypeOfBar");
 
-                    b.Property<int>("Zipcode");
+                    b.Property<string>("Zipcode");
 
                     b.HasKey("BarOwnerId");
 
                     b.HasIndex("ApplicationId");
+
+                    b.HasIndex("HappyHourSpecialsId");
 
                     b.ToTable("BarOwners");
                 });
@@ -294,6 +294,10 @@ namespace PubHub.Data.Migrations
 
                     b.HasKey("RatingsTableId");
 
+                    b.HasIndex("BarOwnerId");
+
+                    b.HasIndex("DrinkEnthusiastId");
+
                     b.ToTable("RatingsTables");
                 });
 
@@ -358,6 +362,11 @@ namespace PubHub.Data.Migrations
                     b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
+
+                    b.HasOne("PubHub.Models.HappyHourSpecials", "HappyHourSpecials")
+                        .WithMany()
+                        .HasForeignKey("HappyHourSpecialsId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PubHub.Models.DrinkEnthusiast", b =>
@@ -365,6 +374,19 @@ namespace PubHub.Data.Migrations
                     b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
+                });
+
+            modelBuilder.Entity("PubHub.Models.RatingsTable", b =>
+                {
+                    b.HasOne("PubHub.Models.BarOwner", "BarOwner")
+                        .WithMany()
+                        .HasForeignKey("BarOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PubHub.Models.DrinkEnthusiast", "DrinkEnthusiast")
+                        .WithMany()
+                        .HasForeignKey("DrinkEnthusiastId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -12,17 +12,17 @@ namespace PubHub.Controllers
 {
     public class DrinkEnthusiastsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public DrinkEnthusiastsController(ApplicationDbContext context)
+        public DrinkEnthusiastsController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: DrinkEnthusiasts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.DrinkEnthusiasts.Include(d => d.ApplicationUser);
+            var applicationDbContext = _db.DrinkEnthusiasts.Include(d => d.ApplicationUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var drinkEnthusiast = await _context.DrinkEnthusiasts
+            var drinkEnthusiast = await _db.DrinkEnthusiasts
                 .Include(d => d.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.DrinkEnthusiastId == id);
             if (drinkEnthusiast == null)
@@ -48,7 +48,7 @@ namespace PubHub.Controllers
         // GET: DrinkEnthusiasts/Create
         public IActionResult Create()
         {
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -61,11 +61,11 @@ namespace PubHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(drinkEnthusiast);
-                await _context.SaveChangesAsync();
+                _db.Add(drinkEnthusiast);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
             return View(drinkEnthusiast);
         }
 
@@ -77,12 +77,12 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var drinkEnthusiast = await _context.DrinkEnthusiasts.FindAsync(id);
+            var drinkEnthusiast = await _db.DrinkEnthusiasts.FindAsync(id);
             if (drinkEnthusiast == null)
             {
                 return NotFound();
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
             return View(drinkEnthusiast);
         }
 
@@ -102,8 +102,8 @@ namespace PubHub.Controllers
             {
                 try
                 {
-                    _context.Update(drinkEnthusiast);
-                    await _context.SaveChangesAsync();
+                    _db.Update(drinkEnthusiast);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +118,7 @@ namespace PubHub.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
+            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", drinkEnthusiast.ApplicationId);
             return View(drinkEnthusiast);
         }
 
@@ -130,7 +130,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var drinkEnthusiast = await _context.DrinkEnthusiasts
+            var drinkEnthusiast = await _db.DrinkEnthusiasts
                 .Include(d => d.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.DrinkEnthusiastId == id);
             if (drinkEnthusiast == null)
@@ -146,15 +146,15 @@ namespace PubHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var drinkEnthusiast = await _context.DrinkEnthusiasts.FindAsync(id);
-            _context.DrinkEnthusiasts.Remove(drinkEnthusiast);
-            await _context.SaveChangesAsync();
+            var drinkEnthusiast = await _db.DrinkEnthusiasts.FindAsync(id);
+            _db.DrinkEnthusiasts.Remove(drinkEnthusiast);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DrinkEnthusiastExists(int id)
         {
-            return _context.DrinkEnthusiasts.Any(e => e.DrinkEnthusiastId == id);
+            return _db.DrinkEnthusiasts.Any(e => e.DrinkEnthusiastId == id);
         }
     }
 }

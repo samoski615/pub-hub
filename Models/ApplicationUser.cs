@@ -10,6 +10,8 @@ namespace PubHub.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public int ApplicationId { get; set; }
+
         [Display(Name = "Name")]
         public string Name { get; set; }
 

@@ -12,17 +12,17 @@ namespace PubHub.Controllers
 {
     public class RatingsTablesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public RatingsTablesController(ApplicationDbContext context)
+        public RatingsTablesController(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         // GET: RatingsTables
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RatingsTables.ToListAsync());
+            return View(await _db.RatingsTables.ToListAsync());
         }
 
         // GET: RatingsTables/Details/5
@@ -33,7 +33,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var ratingsTable = await _context.RatingsTables
+            var ratingsTable = await _db.RatingsTables
                 .FirstOrDefaultAsync(m => m.RatingsTableId == id);
             if (ratingsTable == null)
             {
@@ -58,8 +58,8 @@ namespace PubHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ratingsTable);
-                await _context.SaveChangesAsync();
+                _db.Add(ratingsTable);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(ratingsTable);
@@ -73,7 +73,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var ratingsTable = await _context.RatingsTables.FindAsync(id);
+            var ratingsTable = await _db.RatingsTables.FindAsync(id);
             if (ratingsTable == null)
             {
                 return NotFound();
@@ -97,8 +97,8 @@ namespace PubHub.Controllers
             {
                 try
                 {
-                    _context.Update(ratingsTable);
-                    await _context.SaveChangesAsync();
+                    _db.Update(ratingsTable);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +124,7 @@ namespace PubHub.Controllers
                 return NotFound();
             }
 
-            var ratingsTable = await _context.RatingsTables
+            var ratingsTable = await _db.RatingsTables
                 .FirstOrDefaultAsync(m => m.RatingsTableId == id);
             if (ratingsTable == null)
             {
@@ -139,15 +139,15 @@ namespace PubHub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ratingsTable = await _context.RatingsTables.FindAsync(id);
-            _context.RatingsTables.Remove(ratingsTable);
-            await _context.SaveChangesAsync();
+            var ratingsTable = await _db.RatingsTables.FindAsync(id);
+            _db.RatingsTables.Remove(ratingsTable);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RatingsTableExists(int id)
         {
-            return _context.RatingsTables.Any(e => e.RatingsTableId == id);
+            return _db.RatingsTables.Any(e => e.RatingsTableId == id);
         }
     }
 }

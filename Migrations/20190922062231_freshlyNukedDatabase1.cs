@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PubHub.Data.Migrations
+namespace PubHub.Migrations
 {
-    public partial class firstMigrationOfPubHub : Migration
+    public partial class freshlyNukedDatabase1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

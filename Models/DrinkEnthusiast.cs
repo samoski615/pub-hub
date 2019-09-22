@@ -36,8 +36,8 @@ namespace PubHub.Models
         [Display(Name = "Check-In Here")]
         public bool CheckInStatus { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string ApplicationId { get; set; }
+        //[ForeignKey("ApplicationUser")]
+        public int ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

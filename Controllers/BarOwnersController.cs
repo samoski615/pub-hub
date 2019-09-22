@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +21,17 @@ namespace PubHub.Controllers
         }
 
         // GET: BarOwners
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            var applicationDbContext = _db.BarOwners.Include(b => b.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _db.BarOwners
+            //    .Include(b => b.ApplicationUser)
+            //    .Where(b => b.BarOwnerId == b.BarOwnerId)
+            //    .SingleOrDefaultAsync();
+
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
+            var currentBarOwner = _db.BarOwners
+                .Where(b => currentUserId == b.BarOwnerId.ToString());
+            return View(currentBarOwner);
         }
 
         // GET: BarOwners/Details/5
@@ -63,7 +71,7 @@ namespace PubHub.Controllers
             {
                 _db.Add(barOwner);
                 await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
@@ -118,7 +126,7 @@ namespace PubHub.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            //ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 

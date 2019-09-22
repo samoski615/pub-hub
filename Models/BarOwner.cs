@@ -11,7 +11,6 @@ namespace PubHub.Models
     {
         [Key]
         public int BarOwnerId { get; set; }
-        public int HappyHourSpecialsId { get; set; }
 
         [Display(Name = "Bar Name")]
         public string BarName { get; set; }
@@ -26,7 +25,7 @@ namespace PubHub.Models
         public string State { get; set; } 
 
         [Display(Name = "Zipcode")]
-        public int Zipcode { get; set; }
+        public string Zipcode { get; set; }
 
         //public double Latitude { get; set; }
         //public double Longitude { get; set; }
@@ -52,9 +51,12 @@ namespace PubHub.Models
         [Display(Name = "Customers Checked In")]
         public int PotentialCustomers { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string ApplicationId { get; set; }
+        //[ForeignKey("ApplicationUser")]
+        public int ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        public int HappyHourSpecialsId { get; set; }
+        public HappyHourSpecials HappyHourSpecials { get; set; }
 
     }
 }

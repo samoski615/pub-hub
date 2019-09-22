@@ -7,14 +7,11 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Index">Bar Owner Home</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HappyHourSpecialsId)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.BarName)
             </th>
@@ -34,25 +31,10 @@
                 @Html.DisplayNameFor(model => model.TypeOfBar)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AverageRating)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.BarOpen)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BarClose)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HappyHourStartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HappyHourEndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PotentialCustomers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
             </th>
             <th></th>
         </tr>
@@ -60,9 +42,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HappyHourSpecialsId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BarName)
             </td>
@@ -82,25 +61,10 @@
                 @Html.DisplayFor(modelItem => item.TypeOfBar)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AverageRating)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.BarOpen)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BarClose)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HappyHourStartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HappyHourEndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PotentialCustomers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BarOwnerId">Edit</a> |
