@@ -1,0 +1,147 @@
+﻿@model PubHub.Models.BarSearchViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h2>Search</h2>
+
+<p>
+    <a asp-action="Index">Back</a>
+</p>
+
+<form asp-controller="DrinkEnthusiasts" asp-action="Search">
+    <p>
+        @*<select asp-for="TypeOfBar" asp-items="Model.TypeOfBar">
+            <option value="">Dive</option>
+            <option value="">Cigar</option>
+            <option value="">Sports</option>
+            <option value="">Dance</option>
+            <option value="">College</option>
+            <option value="">Rooftop</option>
+            <option value="">Irish Pub</option>
+        </select>*@
+
+        @*<select asp-for="TypeOfDrink" asp-items="Model.TypeOfDrink">
+            <option value="">Vodka</option>
+            <option value="">Whiskey</option>
+            <option value="">Beer</option>
+            <option value="">Tequila</option>
+            <option value="">Brandy</option>
+            <option value="">Wine</option>
+            <option value="">Cognac</option>
+            <option value="">Rum</option>
+            <option value="">Gin</option>
+            <option value="">Bourbon</option>
+        </select>
+
+        <select asp-for="DayOfWeek" asp-items="Model.DayOfWeek">
+            <option value="">Sunday</option>
+            <option value="">Monday</option>
+            <option value="">Tuesday</option>
+            <option value="">Wednesday</option>
+            <option value="">Thursday</option>
+            <option value="">Friday</option>
+            <option value="">Saturday</option>
+        </select>
+
+        <select asp-for="HappyHourStartTime" asp-items="Model.HappyHourStartTime">
+            <option value="">12:00</option>
+            <option value="">1:00</option>
+            <option value="">2:00</option>
+            <option value="">3:00</option>
+            <option value="">4:00</option>
+            <option value="">5:00</option>
+            <option value="">6:00</option>
+            <option value="">7:00</option>
+            <option value="">8:00</option>
+            <option value="">9:00</option>
+            <option value="">10:00</option>
+            <option value="">11:00</option>
+        </select>
+       
+        <label asp-for="HappyHourEndTime" class=""></label>
+        <select asp-for="HappyHourEndTime" asp-items="Model.HappyHourEndTime">
+            <option value="">12:00</option>
+            <option value="">1:00</option>
+            <option value="">2:00</option>
+            <option value="">3:00</option>
+            <option value="">4:00</option>
+            <option value="">5:00</option>
+            <option value="">6:00</option>
+            <option value="">7:00</option>
+            <option value="">8:00</option>
+            <option value="">9:00</option>
+            <option value="">10:00</option>
+            <option value="">11:00</option>
+        </select>*@
+        Search: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].BarName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].Zipcode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].TypeOfBar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].HappyHourStartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BarOwners[0].HappyHourEndTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BarOwners)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BarName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zipcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfBar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HappyHourStartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HappyHourEndTime)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.BarOwnerId">Details</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

@@ -9,29 +9,35 @@ using Microsoft.EntityFrameworkCore;
 using PubHub.Data;
 using PubHub.Models;
 
+
 namespace PubHub.Controllers
 {
     public class BarOwnersController : Controller
     {
         private readonly ApplicationDbContext _db;
+        DrinkEnthusiast drinkEnthusiast;
+        BarOwner barOwner;
 
         public BarOwnersController(ApplicationDbContext db)
         {
             _db = db;
+            drinkEnthusiast = new DrinkEnthusiast();
         }
 
         // GET: BarOwners
-        public ActionResult Index()
+        public async Task <IActionResult> Index()
         {
+            //var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
             //var applicationDbContext = _db.BarOwners
             //    .Include(b => b.ApplicationUser)
             //    .Where(b => b.BarOwnerId == b.BarOwnerId)
             //    .SingleOrDefaultAsync();
 
-            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
-            var currentBarOwner = _db.BarOwners
-                .Where(b => currentUserId == b.BarOwnerId.ToString());
-            return View(currentBarOwner);
+            //var currentBarOwner = _db.Users.Find(currentUserId);
+            //return View(currentBarOwner);
+
+            return View(await _db.BarOwners.ToListAsync());
+
         }
 
         // GET: BarOwners/Details/5
@@ -56,7 +62,6 @@ namespace PubHub.Controllers
         // GET: BarOwners/Create
         public IActionResult Create()
         {
-            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -65,7 +70,7 @@ namespace PubHub.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BarOwnerId,HappyHourSpecialsId,BarName,Address,City,State,Zipcode,TypeOfBar,AverageRating,BarOpen,BarClose,HappyHourStartTime,HappyHourEndTime,PotentialCustomers,ApplicationId")] BarOwner barOwner)
+        public async Task<IActionResult> Create([Bind("BarOwnerId,BarName,Address,City,State,Zipcode,TypeOfBar,BarOpen,BarClose")] BarOwner barOwner)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +78,7 @@ namespace PubHub.Controllers
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            //ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 
@@ -90,7 +95,7 @@ namespace PubHub.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
+            //ViewData["ApplicationId"] = new SelectList(_db.Set<ApplicationUser>(), "Id", "Id", barOwner.ApplicationId);
             return View(barOwner);
         }
 
@@ -163,6 +168,31 @@ namespace PubHub.Controllers
         private bool BarOwnerExists(int id)
         {
             return _db.BarOwners.Any(e => e.BarOwnerId == id);
+        }
+
+        //public async Task<IActionResult> GetStatistics()
+        //{
+        //    PossibleCustomers(drinkEnthusiast);
+        //}
+
+        public ActionResult PossibleCustomers(DrinkEnthusiast drinkEnthusiast) //when people click the the check in box, the potential customers property in bar model will increment
+        {//the method will be a bool, if checked = true else = false, if true add, else leave it alone
+            ViewBag.CheckInStatus = drinkEnthusiast.CheckInStatus;
+            if (drinkEnthusiast.CheckInStatus == true)
+            {
+                IncrementPossibleCustomers(barOwner);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Index");
+        }
+
+        public void IncrementPossibleCustomers(BarOwner barOwner)
+        {
+            barOwner.PotentialCustomers++;
+            _db.SaveChanges();
         }
     }
 }

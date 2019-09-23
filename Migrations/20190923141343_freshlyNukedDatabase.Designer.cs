@@ -10,7 +10,7 @@ using PubHub.Data;
 namespace PubHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190922062024_freshlyNukedDatabase")]
+    [Migration("20190923141343_freshlyNukedDatabase")]
     partial class freshlyNukedDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,8 +209,6 @@ namespace PubHub.Migrations
 
                     b.Property<string>("HappyHourEndTime");
 
-                    b.Property<int>("HappyHourSpecialsId");
-
                     b.Property<string>("HappyHourStartTime");
 
                     b.Property<int>("PotentialCustomers");
@@ -219,13 +217,13 @@ namespace PubHub.Migrations
 
                     b.Property<string>("TypeOfBar");
 
+                    b.Property<string>("TypeOfDrink");
+
                     b.Property<string>("Zipcode");
 
                     b.HasKey("BarOwnerId");
 
                     b.HasIndex("ApplicationId");
-
-                    b.HasIndex("HappyHourSpecialsId");
 
                     b.ToTable("BarOwners");
                 });
@@ -240,6 +238,8 @@ namespace PubHub.Migrations
 
                     b.Property<string>("ApplicationId");
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<bool>("CheckInStatus");
 
                     b.Property<string>("City");
@@ -248,13 +248,17 @@ namespace PubHub.Migrations
 
                     b.Property<string>("LastName");
 
+                    b.Property<string>("Latitude");
+
+                    b.Property<string>("Longitude");
+
                     b.Property<string>("State");
 
                     b.Property<string>("Zipcode");
 
                     b.HasKey("DrinkEnthusiastId");
 
-                    b.HasIndex("ApplicationId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("DrinkEnthusiasts");
                 });
@@ -304,6 +308,8 @@ namespace PubHub.Migrations
             modelBuilder.Entity("PubHub.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("ApplicationId");
 
                     b.Property<string>("Name");
 
@@ -362,18 +368,13 @@ namespace PubHub.Migrations
                     b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationId");
-
-                    b.HasOne("PubHub.Models.HappyHourSpecials", "HappyHourSpecials")
-                        .WithMany()
-                        .HasForeignKey("HappyHourSpecialsId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PubHub.Models.DrinkEnthusiast", b =>
                 {
                     b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationId");
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("PubHub.Models.RatingsTable", b =>

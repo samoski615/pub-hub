@@ -13,12 +13,12 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BarOwnerId" />
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="HappyHourSpecialsId" class="control-label"></label>
                 <input type="hidden" asp-for="HappyHourSpecialsId" />
-                @*<input asp-for="HappyHourSpecialsId" class="form-control" />
-        <span asp-validation-for="HappyHourSpecialsId" class="text-danger"></span>*@
-            </div>
+                <input asp-for="HappyHourSpecialsId" class="form-control" />
+        <span asp-validation-for="HappyHourSpecialsId" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="BarName" class="control-label"></label>
                 <input asp-for="BarName" class="form-control" />
@@ -59,12 +59,12 @@
                 <input asp-for="BarClose" class="form-control" />
                 <span asp-validation-for="BarClose" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="ApplicationId" class="control-label"></label>
                 <input type="hidden" asp-for="ApplicationId" />
-                @*<select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
-        <span asp-validation-for="ApplicationId" class="text-danger"></span>*@
-            </div>
+                <select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
+        <span asp-validation-for="ApplicationId" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

@@ -30,12 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Zipcode)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CheckInStatus)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -60,12 +60,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Zipcode)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CheckInStatus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DrinkEnthusiastId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.DrinkEnthusiastId">Details</a> |

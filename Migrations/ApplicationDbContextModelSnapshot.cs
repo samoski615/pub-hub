@@ -193,9 +193,7 @@ namespace PubHub.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int>("ApplicationId");
-
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<string>("ApplicationId");
 
                     b.Property<int>("AverageRating");
 
@@ -209,8 +207,6 @@ namespace PubHub.Migrations
 
                     b.Property<string>("HappyHourEndTime");
 
-                    b.Property<int>("HappyHourSpecialsId");
-
                     b.Property<string>("HappyHourStartTime");
 
                     b.Property<int>("PotentialCustomers");
@@ -219,13 +215,13 @@ namespace PubHub.Migrations
 
                     b.Property<string>("TypeOfBar");
 
+                    b.Property<string>("TypeOfDrink");
+
                     b.Property<string>("Zipcode");
 
                     b.HasKey("BarOwnerId");
 
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("HappyHourSpecialsId");
+                    b.HasIndex("ApplicationId");
 
                     b.ToTable("BarOwners");
                 });
@@ -238,7 +234,7 @@ namespace PubHub.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<int>("ApplicationId");
+                    b.Property<string>("ApplicationId");
 
                     b.Property<string>("ApplicationUserId");
 
@@ -249,6 +245,10 @@ namespace PubHub.Migrations
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
+
+                    b.Property<string>("Latitude");
+
+                    b.Property<string>("Longitude");
 
                     b.Property<string>("State");
 
@@ -307,7 +307,7 @@ namespace PubHub.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int>("ApplicationId");
+                    b.Property<string>("ApplicationId");
 
                     b.Property<string>("Name");
 
@@ -365,12 +365,7 @@ namespace PubHub.Migrations
                 {
                     b.HasOne("PubHub.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("PubHub.Models.HappyHourSpecials", "HappyHourSpecials")
-                        .WithMany()
-                        .HasForeignKey("HappyHourSpecialsId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationId");
                 });
 
             modelBuilder.Entity("PubHub.Models.DrinkEnthusiast", b =>

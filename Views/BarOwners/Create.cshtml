@@ -45,6 +45,7 @@
             <div class="form-group">
                 <label asp-for="BarOpen" class="control-label"></label>
                 <input asp-for="BarOpen" class="form-control" />
+                <span asp-validation-for="BarOpen" class="text-danger"></span>
                 @*<select asp-for="BarOpen" class="form-control" asp-items="ViewBag.BarOpen"></select>*@
             </div>
             <div class="form-group">
@@ -52,11 +53,11 @@
                 <input asp-for="BarClose" class="form-control" />
                 <span asp-validation-for="BarClose" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <input type="hidden" asp-for="ApplicationId" />
-                @*<label asp-for="ApplicationId" class="control-label"></label>*@
-                @*<select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>*@
-            </div>
+                <label asp-for="ApplicationId" class="control-label"></label>
+                <select asp-for="ApplicationId" class="form-control" asp-items="ViewBag.ApplicationId"></select>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

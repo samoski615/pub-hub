@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -51,12 +53,19 @@ namespace PubHub.Models
         [Display(Name = "Customers Checked In")]
         public int PotentialCustomers { get; set; }
 
-        //[ForeignKey("ApplicationUser")]
-        public int ApplicationId { get; set; }
+        [Display(Name = "Type of Drink")]
+        public string TypeOfDrink { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Day of the Week")]
+        public SelectList DayOfWeek { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public int HappyHourSpecialsId { get; set; }
-        public HappyHourSpecials HappyHourSpecials { get; set; }
+        //public int HappyHourSpecialsId { get; set; }
+        //public HappyHourSpecials HappyHourSpecials { get; set; }
 
     }
 }

@@ -30,14 +30,14 @@ namespace PubHub.Models
         [Display(Name = "Zipcode")]
         public string Zipcode { get; set; }
 
-        //public double Latitude { get; set; }
-        //public double Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
         [Display(Name = "Check-In Here")]
         public bool CheckInStatus { get; set; }
 
         //[ForeignKey("ApplicationUser")]
-        public int ApplicationId { get; set; }
+        public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
